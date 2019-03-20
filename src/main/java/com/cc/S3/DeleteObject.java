@@ -1,23 +1,23 @@
 package com.cc.S3;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.io.File;
+import java.io.IOException;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 
-public class CreateS3Bucket {
-
+public class DeleteObject {
+	
 	final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 
-	public void createBucket(String bucketName){
-		//String bucketName = "video-h264file-bucket";
+	public void deleteObject(String bucketName, String file) throws IOException {
 		try {
-			if(!s3.doesBucketExistV2(bucketName)) {
-				s3.createBucket(bucketName);
-			}
+			s3.deleteObject(bucketName, file);
+			System.out.println("File Deleted successfully"+file);
 		} catch (AmazonS3Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
+    }
+
 }

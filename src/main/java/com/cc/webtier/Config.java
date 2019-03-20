@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.cc.S3.CreateS3Bucket;
+import com.cc.S3.DeleteObject;
 import com.cc.S3.FetchObject;
 import com.cc.S3.UploadObject;
 import com.cc.SQS.QueueVideoObjectProducer;
@@ -39,6 +40,10 @@ public class Config {
     @Bean
     public FetchObject FetchObject() {
     	return new FetchObject();
+    }
+    @Bean
+    public DeleteObject deleteObject() {
+    	return new DeleteObject();
     }
    
 }
