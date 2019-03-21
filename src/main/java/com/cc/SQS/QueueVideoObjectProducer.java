@@ -10,10 +10,10 @@ public class QueueVideoObjectProducer {
 
 	@Value("${sqs.queue.name}")
 	private String QUEUE_NAME;
-	
+    final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
+
 	//private static final String QUEUE_NAME = "VideoObjectRequestQueue";
 	public void putVideoObjectInQueue(String requestId) {
-        final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
         String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
         SendMessageRequest sendMsgRqst = new SendMessageRequest()
                 .withQueueUrl(queueUrl)

@@ -47,7 +47,7 @@ public class ObjectDetectorController {
 				videoService, objectProducer, fetchObject, deleteObject, S3_BUCKET_NAME_UPLOAD, S3_BUCKET_NAME_FETCH));
 		try {
 			Long timeTaken = System.currentTimeMillis()-startTime;
-			return result.get() + "\nTime Taken for object detection" +  timeTaken + "ms";
+			return result.get();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			error = e.getMessage();

@@ -53,24 +53,28 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 		}
 		Long starttime = System.currentTimeMillis();;
 		Long endTime = System.currentTimeMillis();
+		Long sleepTime = (long) 7000;
 		try {
 			starttime = System.currentTimeMillis();;
 			endTime = System.currentTimeMillis();
-			while(object==null && !(endTime-starttime>120000)) {
+			while(object==null && !(endTime-starttime>30000)) {
 				System.out.println("starttime : " +starttime);
 				System.out.println("endtime :" + endTime);
 				object=fetchObject.fetchObject(S3_BUCKET_NAME_FETCH, file);
-				endTime = System.currentTimeMillis();
+				Thread.sleep(sleepTime);;
 			}
-		deleteObject.deleteObject(S3_BUCKET_NAME_UPLOAD, file.getName());
+		file.delete();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 		};
-		if(endTime-starttime>120000) {
+		if(endTime-starttime>30000) {
 			return TIMEOUT_DUE_TO_DELAY_IN_OBJECT_DETECTION;
 		}
-		return object;
+		return file.getName()+","+object;
 	}
 
 }
