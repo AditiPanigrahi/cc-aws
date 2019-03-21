@@ -56,8 +56,9 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 		try {
 			starttime = System.currentTimeMillis();;
 			endTime = System.currentTimeMillis();
-			while(object==null && !(endTime-starttime>5000)) {
-				
+			while(object==null && !(endTime-starttime>120000)) {
+				System.out.println("starttime : " +starttime);
+				System.out.println("endtime :" + endTime);
 				object=fetchObject.fetchObject(S3_BUCKET_NAME_FETCH, file);
 				endTime = System.currentTimeMillis();
 			}

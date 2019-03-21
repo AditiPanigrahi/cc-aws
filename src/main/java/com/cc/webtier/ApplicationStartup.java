@@ -10,7 +10,7 @@ import com.cc.S3.CreateS3Bucket;
 import com.cc.SQS.QueueVideoObjectService;
 
 @Component
-public class ApplicationStartup 
+public class ApplicationStartup  
 implements ApplicationListener<ApplicationReadyEvent> {
 
 	/**

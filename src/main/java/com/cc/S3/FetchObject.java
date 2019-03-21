@@ -29,6 +29,6 @@ public class FetchObject {
 		} catch (AmazonS3Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return "Object Detection Result not Available";
+		return null;
 	}
 }
