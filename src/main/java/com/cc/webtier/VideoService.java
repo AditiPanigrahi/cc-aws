@@ -68,8 +68,8 @@ public class VideoService {
 	private String getFilename(String fileName, String disposition) {
 		int index = disposition.indexOf(FILENAME);
 		if (index > 0) {
-			fileName = disposition.substring(index + 11,
-					disposition.length() - 1);
+			fileName = disposition.substring(index + 9,
+					disposition.length());
 		}
 		return fileName;
 	}	
