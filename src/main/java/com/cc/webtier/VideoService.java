@@ -31,9 +31,11 @@ public class VideoService {
 				fileName = processConnection(con, fileName);
 			}
 			file = new File(fileName);
-			FileOutputStream outputStream = new FileOutputStream(file);
-			writeToFile(inputStream, outputStream);
-			outputStream.close();
+			if(!file.exists()) {
+				FileOutputStream outputStream = new FileOutputStream(file);
+				writeToFile(inputStream, outputStream);
+				outputStream.close();
+			}
 			inputStream.close();
 			System.out.println(fileName);
 		} catch (MalformedURLException e) {
@@ -42,7 +44,7 @@ public class VideoService {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
-		}
+		} 
 
 		return file;
 	}

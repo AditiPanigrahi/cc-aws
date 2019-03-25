@@ -20,13 +20,15 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 	public QueueVideoObjectProducer objectProducer;
 	public FetchObject fetchObject;
 	public DeleteObject deleteObject;
+	public long timeout ;
 
 	private String S3_BUCKET_NAME_FETCH;
 
 	private String S3_BUCKET_NAME_UPLOAD;
+	private final static Object lock = new Object();
 
 	public ObjectDetectorControllerThread(UploadObject uo, VideoService vo, QueueVideoObjectProducer qvop
-			,FetchObject fo, DeleteObject dob, String queueUpload, String queueFetch) {
+			,FetchObject fo, DeleteObject dob, String queueUpload, String queueFetch, Long timeout) {
 		this.uploadObject = uo;
 		this.videoService = vo;
 		this.fetchObject = fo;
@@ -37,31 +39,36 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 	}
 	public String call() {
 		String object = null;
-		File file = videoService.getVideo();
-		System.out.println(object);
+		File file = null;
+		synchronized (lock) {
+			file = videoService.getVideo();
+			System.out.println(object);
 
-		System.out.println(VIDEO_FETCHED_SUCCESFULLY+ file.getName());
-		if(file != null) {
-			try {
-				uploadObject.uploadObject(S3_BUCKET_NAME_UPLOAD, file);
-				System.out.println(FILE_UPLOAD_SUCCESSFUL);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println(VIDEO_FETCHED_SUCCESFULLY+ file.getName());
+			if(file != null) {
+				try {
+					uploadObject.uploadObject(S3_BUCKET_NAME_UPLOAD, file);
+					System.out.println(FILE_UPLOAD_SUCCESSFUL);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				objectProducer.putVideoObjectInQueue(file.getName());
 			}
-			objectProducer.putVideoObjectInQueue(file.getName());
 		}
+
 		Long starttime = System.currentTimeMillis();;
 		Long endTime = System.currentTimeMillis();
 		Long sleepTime = (long) 7000;
 		try {
 			starttime = System.currentTimeMillis();;
 			endTime = System.currentTimeMillis();
-			while(object==null && !(endTime-starttime>30000)) {
+			while(object==null && !(endTime-starttime>timeout)) {
 				System.out.println("starttime : " +starttime);
 				System.out.println("endtime :" + endTime);
 				object=fetchObject.fetchObject(S3_BUCKET_NAME_FETCH, file);
 				Thread.sleep(sleepTime);;
+				endTime = System.currentTimeMillis();
 			}
 		file.delete();
 		} catch (IOException e) {
@@ -71,7 +78,7 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		};
-		if(endTime-starttime>30000) {
+		if(endTime-starttime>timeout) {
 			return TIMEOUT_DUE_TO_DELAY_IN_OBJECT_DETECTION;
 		}
 		return file.getName()+","+object;

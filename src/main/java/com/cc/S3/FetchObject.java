@@ -15,8 +15,8 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.S3Object;
 
 public class FetchObject {
-	final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 	public String fetchObject(String bucketName, File file) throws IOException {
+		final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 		String key_Name = file.getName();
 		try {
 			S3Object object = s3.getObject(bucketName, key_Name);
@@ -27,7 +27,7 @@ public class FetchObject {
 				return objectDetected;
 			}
 		} catch (AmazonS3Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Failed to fetch object for key " + key_Name + e.getMessage());
 		}
 		return null;
 	}
