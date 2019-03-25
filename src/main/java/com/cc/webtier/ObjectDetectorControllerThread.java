@@ -11,6 +11,9 @@ import com.cc.SQS.QueueVideoObjectProducer;
 
 public class ObjectDetectorControllerThread implements Callable<String> {
 
+	private static final String RESULT_REFACTOR = ",";
+	private static final String END_RESULT = "]";
+	private static final String START_RESULT = "[";
 	private static final String VIDEO_FETCHED_SUCCESFULLY = "Video fetched succesfully";
 	private static final String FILE_UPLOAD_SUCCESSFUL = "File Upload successful";
 	private static final String OBJECT_UPLOAD_SUCCESSFUL = "Object upload Successful";
@@ -81,7 +84,7 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 		if(endTime-starttime>timeout) {
 			return TIMEOUT_DUE_TO_DELAY_IN_OBJECT_DETECTION;
 		}
-		return file.getName()+","+object;
+		return START_RESULT+file.getName()+RESULT_REFACTOR+object+END_RESULT;
 	}
 
 }
