@@ -38,13 +38,17 @@ public class ObjectDetectorController {
 	@Value("${s3.fileObject.bucket.name}")
 	private String S3_BUCKET_NAME_UPLOAD;
 	
+	@Value("${request.timeout}")
+	private long timeout;
+	
 	@RequestMapping(value="/detectObjectFromVideo", method=RequestMethod.GET, produces="text/plain")
 	public String getObject() {
 		Long startTime = System.currentTimeMillis();;
 		String error = null;
 		ExecutorService executorService = Executors.newFixedThreadPool(100);
 		Future<String> result =  executorService.submit(new ObjectDetectorControllerThread(uploadObject, 
-				videoService, objectProducer, fetchObject, deleteObject, S3_BUCKET_NAME_UPLOAD, S3_BUCKET_NAME_FETCH));
+				videoService, objectProducer, fetchObject, deleteObject, S3_BUCKET_NAME_UPLOAD, S3_BUCKET_NAME_FETCH,
+				timeout));
 		try {
 			Long timeTaken = System.currentTimeMillis()-startTime;
 			return result.get();

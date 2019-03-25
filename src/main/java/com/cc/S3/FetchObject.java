@@ -27,7 +27,7 @@ public class FetchObject {
 				return objectDetected;
 			}
 		} catch (AmazonS3Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Failed to fetch object for key " + key_Name + e.getMessage());
 		}
 		return null;
 	}

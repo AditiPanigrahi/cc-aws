@@ -17,7 +17,7 @@ public class UploadObject {
 			s3.putObject (bucketName, key_Name, file);
 			System.out.println("File uploaded successfully"+key_Name);
 		} catch (AmazonS3Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Failed upload object for key " + key_Name + e.getMessage());
 		}
     }
 	public void uploadFinalRes(String bucketName, String fileName, String result) throws IOException {
@@ -26,7 +26,7 @@ public class UploadObject {
 			s3.putObject (bucketName, fileName, result);
 			System.out.println("File uploaded successfully"+fileName);
 		} catch (AmazonS3Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Failed upload object for key " + fileName + e.getMessage());
 		}
     }
 

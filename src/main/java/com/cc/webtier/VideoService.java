@@ -31,15 +31,20 @@ public class VideoService {
 				fileName = processConnection(con, fileName);
 			}
 			file = new File(fileName);
-			FileOutputStream outputStream = new FileOutputStream(file);
-			writeToFile(inputStream, outputStream);
-			outputStream.close();
+			if(!file.exists()) {
+				FileOutputStream outputStream = new FileOutputStream(file);
+				writeToFile(inputStream, outputStream);
+				outputStream.close();
+			}
 			inputStream.close();
 			System.out.println(fileName);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
