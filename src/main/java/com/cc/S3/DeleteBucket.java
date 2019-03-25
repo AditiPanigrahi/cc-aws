@@ -8,7 +8,7 @@ public class DeleteBucket {
 
 	public static void deleteBucket() {
 		final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
-		String bucketName = "myfirstbucketakash";
+		String bucketName = "bucket-name";
 		try {
 			s3.deleteBucket(bucketName);
 		} catch (AmazonS3Exception e) {

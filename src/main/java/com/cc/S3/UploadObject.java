@@ -9,10 +9,10 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 
 public class UploadObject {
 	
-	final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 
 	public void uploadObject(String bucketName, File file) throws IOException {
 		String key_Name = file.getName();
+		final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 		try {
 			s3.putObject (bucketName, key_Name, file);
 			System.out.println("File uploaded successfully"+key_Name);
@@ -22,6 +22,7 @@ public class UploadObject {
     }
 	public void uploadFinalRes(String bucketName, String fileName, String result) throws IOException {
 		try {
+			final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 			s3.putObject (bucketName, fileName, result);
 			System.out.println("File uploaded successfully"+fileName);
 		} catch (AmazonS3Exception e) {

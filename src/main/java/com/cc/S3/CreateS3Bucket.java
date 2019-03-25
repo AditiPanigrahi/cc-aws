@@ -8,10 +8,10 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 
 public class CreateS3Bucket {
 
-	final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 
 	public void createBucket(String bucketName){
 		//String bucketName = "video-h264file-bucket";
+		final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 		try {
 			if(!s3.doesBucketExistV2(bucketName)) {
 				s3.createBucket(bucketName);

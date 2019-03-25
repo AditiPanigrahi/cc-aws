@@ -15,8 +15,8 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.S3Object;
 
 public class FetchObject {
-	final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 	public String fetchObject(String bucketName, File file) throws IOException {
+		final AmazonS3  s3 = AmazonS3ClientBuilder.defaultClient();
 		String key_Name = file.getName();
 		try {
 			S3Object object = s3.getObject(bucketName, key_Name);
