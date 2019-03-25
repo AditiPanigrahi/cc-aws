@@ -31,7 +31,7 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 	private final static Object lock = new Object();
 
 	public ObjectDetectorControllerThread(UploadObject uo, VideoService vo, QueueVideoObjectProducer qvop
-			,FetchObject fo, DeleteObject dob, String queueUpload, String queueFetch, Long timeout) {
+			,FetchObject fo, DeleteObject dob, String queueUpload, String queueFetch, Long timeoutforRequest) {
 		this.uploadObject = uo;
 		this.videoService = vo;
 		this.fetchObject = fo;
@@ -39,6 +39,7 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 		this.deleteObject = dob;
 		this.S3_BUCKET_NAME_UPLOAD = queueUpload;
 		this.S3_BUCKET_NAME_FETCH = queueFetch;
+		this.timeout = timeoutforRequest;
 	}
 	public String call() {
 		String object = null;
