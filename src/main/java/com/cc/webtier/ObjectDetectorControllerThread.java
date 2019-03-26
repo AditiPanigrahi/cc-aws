@@ -60,10 +60,16 @@ public class ObjectDetectorControllerThread implements Callable<String> {
 				objectProducer.putVideoObjectInQueue(file.getName());
 			}
 		}
+		try {
+			Thread.sleep(50000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		};
 
 		Long starttime = System.currentTimeMillis();;
 		Long endTime = System.currentTimeMillis();
-		Long sleepTime = (long) 7000;
+		Long sleepTime = (long) 10000;
 		try {
 			starttime = System.currentTimeMillis();;
 			endTime = System.currentTimeMillis();
